@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WTF</title>
+    <title>Romantic Interactive Story</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -36,7 +36,12 @@
         .background-hug { background-image: url('https://example.com/hug-background.jpg'); }
         .background-kiss { background-image: url('https://example.com/kiss-background.jpg'); }
         .background-valentine { background-image: url('https://example.com/valentine-background.jpg'); }
-        .background-sad { background-image: url('https://example.com/sad-background.jpg'); color: white; }
+        .background-sad-propose { background-image: url('https://example.com/sad-propose.jpg'); color: white; }
+        .background-sad-chocolate { background-image: url('https://example.com/sad-chocolate.jpg'); color: white; }
+        .background-sad-teddy { background-image: url('https://example.com/sad-teddy.jpg'); color: white; }
+        .background-sad-promise { background-image: url('https://example.com/sad-promise.jpg'); color: white; }
+        .background-sad-hug { background-image: url('https://example.com/sad-hug.jpg'); color: white; }
+        .background-sad-kiss { background-image: url('https://example.com/sad-kiss.jpg'); color: white; }
         .fireworks { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; }
         .firework { position: absolute; font-size: 2em; animation: explode 2s ease-out forwards; }
         @keyframes explode { 0% { transform: scale(0); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
@@ -112,7 +117,7 @@
                             <div class="content-overlay">
                                 <h1>Happy Propose Day, My Love!</h1>
                                 <button onclick="nextDay('chocolate')">Accept Proposal</button>
-                                <button onclick="endSad()">Decline</button>
+                                <button onclick="endSad('propose')">Decline</button>
                             </div>
                         `;
                         break;
@@ -122,7 +127,7 @@
                             <div class="content-overlay">
                                 <h1>Happy Chocolate Day, My Love!</h1>
                                 <button onclick="nextDay('teddy')">Accept</button>
-                                <button onclick="endSad()">Decline</button>
+                                <button onclick="endSad('chocolate')">Decline</button>
                             </div>
                         `;
                         break;
@@ -132,7 +137,7 @@
                             <div class="content-overlay">
                                 <h1>Happy Teddy Day, My Love!</h1>
                                 <button onclick="nextDay('promise')">Accept</button>
-                                <button onclick="endSad()">Decline</button>
+                                <button onclick="endSad('teddy')">Decline</button>
                             </div>
                         `;
                         break;
@@ -142,7 +147,7 @@
                             <div class="content-overlay">
                                 <h1>Happy Promise Day, My Love!</h1>
                                 <button onclick="nextDay('hug')">Accept</button>
-                                <button onclick="endSad()">Decline</button>
+                                <button onclick="endSad('promise')">Decline</button>
                             </div>
                         `;
                         break;
@@ -152,7 +157,7 @@
                             <div class="content-overlay">
                                 <h1>Happy Hug Day, My Love!</h1>
                                 <button onclick="nextDay('kiss')">Accept</button>
-                                <button onclick="endSad()">Decline</button>
+                                <button onclick="endSad('hug')">Decline</button>
                             </div>
                         `;
                         break;
@@ -162,7 +167,7 @@
                             <div class="content-overlay">
                                 <h1>Happy Kiss Day, My Love!</h1>
                                 <button onclick="nextDay('message')">Accept</button>
-                                <button onclick="endSad()">Decline</button>
+                                <button onclick="endSad('kiss')">Decline</button>
                             </div>
                         `;
                         break;
@@ -195,11 +200,56 @@
                             </div>
                         `;
                         break;
-                    case 'sad':
-                        content.classList.add('background-sad');
+                    case 'sad-propose':
+                        content.classList.add('background-sad-propose');
                         content.innerHTML = `
                             <div class="content-overlay">
-                                <h1>GOODBYE</h1>
+                                <h1>Proposal Declined - GOODBYE</h1>
+                                <p>Refresh the page to start over.</p>
+                            </div>
+                        `;
+                        break;
+                    case 'sad-chocolate':
+                        content.classList.add('background-sad-chocolate');
+                        content.innerHTML = `
+                            <div class="content-overlay">
+                                <h1>Chocolate Day Declined - GOODBYE</h1>
+                                <p>Refresh the page to start over.</p>
+                            </div>
+                        `;
+                        break;
+                    case 'sad-teddy':
+                        content.classList.add('background-sad-teddy');
+                        content.innerHTML = `
+                            <div class="content-overlay">
+                                <h1>Teddy Day Declined - GOODBYE</h1>
+                                <p>Refresh the page to start over.</p>
+                            </div>
+                        `;
+                        break;
+                    case 'sad-promise':
+                        content.classList.add('background-sad-promise');
+                        content.innerHTML = `
+                            <div class="content-overlay">
+                                <h1>Promise Day Declined - GOODBYE</h1>
+                                <p>Refresh the page to start over.</p>
+                            </div>
+                        `;
+                        break;
+                    case 'sad-hug':
+                        content.classList.add('background-sad-hug');
+                        content.innerHTML = `
+                            <div class="content-overlay">
+                                <h1>Hug Day Declined - GOODBYE</h1>
+                                <p>Refresh the page to start over.</p>
+                            </div>
+                        `;
+                        break;
+                    case 'sad-kiss':
+                        content.classList.add('background-sad-kiss');
+                        content.innerHTML = `
+                            <div class="content-overlay">
+                                <h1>Kiss Day Declined - GOODBYE</h1>
                                 <p>Refresh the page to start over.</p>
                             </div>
                         `;
@@ -240,8 +290,8 @@
             loadPage(next, 200); // Faster fade for accepts
         }
 
-        function endSad() {
-            loadPage('sad', 500); // Slower fade for declines
+        function endSad(day) {
+            loadPage('sad-' + day, 500); // Slower fade for declines, unique page
         }
 
         function retry() {
