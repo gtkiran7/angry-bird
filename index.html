@@ -24,19 +24,47 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 0.5s ease, transform 0.5s ease; /* Base transition */
         }
-        .background-intro { background-image: url('https://example.com/intro-background.jpg'); } /* Replace with your intro image URL */
-        .background-couple { background-image: url('https://example.com/couple-background.jpg'); } /* Replace with your couple image URL */
-        .background-question { background-image: url('https://example.com/question-background.jpg'); } /* Replace with your ? image URL */
-        .background-missing { background-image: url('https://example.com/missing-background.jpg'); } /* Replace with your missing image URL */
-        .background-propose { background-image: url('https://example.com/propose-background.jpg'); } /* Replace with your propose image URL */
-        .background-chocolate { background-image: url('https://example.com/chocolate-background.jpg'); } /* Replace with your chocolate image URL */
-        .background-teddy { background-image: url('https://example.com/teddy-background.jpg'); } /* Replace with your teddy image URL */
-        .background-promise { background-image: url('https://example.com/promise-background.jpg'); } /* Replace with your promise image URL */
-        .background-hug { background-image: url('https://example.com/hug-background.jpg'); } /* Replace with your hug image URL */
-        .background-kiss { background-image: url('https://example.com/kiss-background.jpg'); } /* Replace with your kiss image URL */
-        .background-valentine { background-image: url('https://example.com/valentine-background.jpg'); } /* Replace with your valentine image URL */
-        .background-sad { background-image: url('https://example.com/sad-background.jpg'); color: white; } /* Replace with your sad image URL */
+        .page.fade-out {
+            opacity: 0;
+        }
+        .page.slide-left {
+            transform: translateX(-100%);
+        }
+        .page.slide-right {
+            transform: translateX(100%);
+        }
+        .page.zoom-in {
+            transform: scale(0.8);
+            opacity: 0;
+        }
+        .page.zoom-in.active {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .page.rotate {
+            transform: rotate(180deg);
+            opacity: 0;
+        }
+        .page.rotate.active {
+            transform: rotate(0deg);
+            opacity: 1;
+        }
+        .background-intro { background-image: url('https://example.com/intro-background.jpg'); }
+        .background-couple { background-image: url('https://example.com/couple-background.jpg'); }
+        .background-question { background-image: url('https://example.com/question-background.jpg'); }
+        .background-missing { background-image: url('https://example.com/missing-background.jpg'); }
+        .background-propose { background-image: url('https://example.com/propose-background.jpg'); }
+        .background-chocolate { background-image: url('https://example.com/chocolate-background.jpg'); }
+        .background-teddy { background-image: url('https://example.com/teddy-background.jpg'); }
+        .background-promise { background-image: url('https://example.com/promise-background.jpg'); }
+        .background-hug { background-image: url('https://example.com/hug-background.jpg'); }
+        .background-kiss { background-image: url('https://example.com/kiss-background.jpg'); }
+        .background-valentine { background-image: url('https://example.com/valentine-background.jpg'); }
+        .background-sad { background-image: url('https://example.com/sad-background.jpg'); color: white; }
         .fireworks { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; }
         .firework { position: absolute; font-size: 2em; animation: explode 2s ease-out forwards; }
         @keyframes explode { 0% { transform: scale(0); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
@@ -55,184 +83,195 @@
         const content = document.getElementById('content');
         let currentPage = 'intro';
 
-        function loadPage(page) {
-            currentPage = page;
-            switch (page) {
-                case 'intro':
-                    content.className = 'page background-intro';
-                    content.innerHTML = `
-                        <div class="content-overlay">
-                            <h1>Introduce Yourself</h1>
-                            <p><strong>WHO ARE YOU?</strong></p>
-                            <input type="text" id="nameInput" placeholder="Enter your name">
-                            <button onclick="checkName()">Submit</button>
-                        </div>
-                    `;
-                    break;
-                case 'couple':
-                    content.className = 'page background-couple';
-                    content.innerHTML = `
-                        <div class="content-overlay">
-                            <h1>Who Do You Love the Most?</h1>
-                            <p>Enter the name of the one you love the most:</p>
-                            <input type="text" id="loveInput" placeholder="Enter name">
-                            <button onclick="checkLove()">Submit</button>
-                        </div>
-                    `;
-                    break;
-                case 'missing':
-                    content.className = 'page background-missing';
-                    content.innerHTML = `
-                        <div class="content-overlay">
-                            <h1>I Miss You</h1>
-                            <p>What do you say to express your feelings?</p>
-                            <input type="text" id="missInput" placeholder="Enter your response">
-                            <button onclick="checkMiss()">Submit</button>
-                        </div>
-                    `;
-                    break;
-                case 'propose':
-                    content.className = 'page background-propose';
-                    content.innerHTML = `
-                        <div class="content-overlay">
-                            <h1>Happy Propose Day, My Love!</h1>
-                            <button onclick="nextDay('chocolate')">Accept Proposal</button>
-                            <button onclick="endSad()">Decline</button>
-                        </div>
-                    `;
-                    break;
-                case 'chocolate':
-                    content.className = 'page background-chocolate';
-                    content.innerHTML = `
-                        <div class="content-overlay">
-                            <h1>Happy Chocolate Day, My Love!</h1>
-                            <button onclick="nextDay('teddy')">Accept</button>
-                            <button onclick="endSad()">Decline</button>
-                        </div>
-                    `;
-                    break;
-                case 'teddy':
-                    content.className = 'page background-teddy';
-                    content.innerHTML = `
-                        <div class="content-overlay">
-                            <h1>Happy Teddy Day, My Love!</h1>
-                            <button onclick="nextDay('promise')">Accept</button>
-                            <button onclick="endSad()">Decline</button>
-                        </div>
-                    `;
-                    break;
-                case 'promise':
-                    content.className = 'page background-promise';
-                    content.innerHTML = `
-                        <div class="content-overlay">
-                            <h1>Happy Promise Day, My Love!</h1>
-                            <button onclick="nextDay('hug')">Accept</button>
-                            <button onclick="endSad()">Decline</button>
-                        </div>
-                    `;
-                    break;
-                case 'hug':
-                    content.className = 'page background-hug';
-                    content.innerHTML = `
-                        <div class="content-overlay">
-                            <h1>Happy Hug Day, My Love!</h1>
-                            <button onclick="nextDay('kiss')">Accept</button>
-                            <button onclick="endSad()">Decline</button>
-                        </div>
-                    `;
-                    break;
-                case 'kiss':
-                    content.className = 'page background-kiss';
-                    content.innerHTML = `
-                        <div class="content-overlay">
-                            <h1>Happy Kiss Day, My Love!</h1>
-                            <button onclick="nextDay('message')">Accept</button>
-                            <button onclick="endSad()">Decline</button>
-                        </div>
-                    `;
-                    break;
-                case 'message':
-                    content.className = 'page background-valentine';
-                    content.innerHTML = `
-                        <div class="content-overlay">
-                            <h1>Every day with you feels brighter ☀️ and lighter. You make my heart feel safe, happy, and full 💓. I’m so grateful I get to love you and call you mine 🥰💖</h1>
-                            <button onclick="loadPage('valentine')">Continue</button>
-                        </div>
-                    `;
-                    break;
-                case 'valentine':
-                    content.className = 'page background-valentine';
-                    content.innerHTML = `
-                        <div class="content-overlay">
-                            <h1>Happy Valentine's Day, My Love!</h1>
-                            <button onclick="fireworks()">Love</button>
-                        </div>
-                    `;
-                    break;
-                case 'question':
-                    content.className = 'page background-question';
-                    content.innerHTML = `
-                        <div class="content-overlay">
-                            <h1>?</h1>
-                            <p>Try again!</p>
-                            <input type="text" id="retryInput" placeholder="Enter correct name/response">
-                            <button onclick="retry()">Try Again</button>
-                        </div>
-                    `;
-                    break;
-                case 'sad':
-                    content.className = 'page background-sad';
-                    content.innerHTML = `
-                        <div class="content-overlay">
-                            <h1>GOODBYE</h1>
-                            <p>Refresh the page to start over.</p>
-                        </div>
-                    `;
-                    break;
-            }
+        function loadPage(page, transition = 'fade') {
+            // Apply transition out
+            content.classList.add(transition + '-out');
+            setTimeout(() => {
+                currentPage = page;
+                // Remove transition classes
+                content.className = 'page';
+                // Load new content
+                switch (page) {
+                    case 'intro':
+                        content.classList.add('background-intro');
+                        content.innerHTML = `
+                            <div class="content-overlay">
+                                <h1>Introduce Yourself</h1>
+                                <p><strong>WHO ARE YOU?</strong></p>
+                                <input type="text" id="nameInput" placeholder="Enter your name">
+                                <button onclick="checkName()">Submit</button>
+                            </div>
+                        `;
+                        break;
+                    case 'couple':
+                        content.classList.add('background-couple');
+                        content.innerHTML = `
+                            <div class="content-overlay">
+                                <h1>Who Do You Love the Most?</h1>
+                                <p>Enter the name of the one you love the most:</p>
+                                <input type="text" id="loveInput" placeholder="Enter name">
+                                <button onclick="checkLove()">Submit</button>
+                            </div>
+                        `;
+                        break;
+                    case 'missing':
+                        content.classList.add('background-missing');
+                        content.innerHTML = `
+                            <div class="content-overlay">
+                                <h1>I Miss You</h1>
+                                <p>What do you say to express your feelings?</p>
+                                <input type="text" id="missInput" placeholder="Enter your response">
+                                <button onclick="checkMiss()">Submit</button>
+                            </div>
+                        `;
+                        break;
+                    case 'propose':
+                        content.classList.add('background-propose');
+                        content.innerHTML = `
+                            <div class="content-overlay">
+                                <h1>Happy Propose Day, My Love!</h1>
+                                <button onclick="nextDay('chocolate', 'zoom')">Accept Proposal</button>
+                                <button onclick="endSad('propose', 'rotate')">Decline</button>
+                            </div>
+                        `;
+                        break;
+                    case 'chocolate':
+                        content.classList.add('background-chocolate');
+                        content.innerHTML = `
+                            <div class="content-overlay">
+                                <h1>Happy Chocolate Day, My Love!</h1>
+                                <button onclick="nextDay('teddy', 'slide-left')">Accept</button>
+                                <button onclick="endSad('chocolate', 'slide-right')">Decline</button>
+                            </div>
+                        `;
+                        break;
+                    case 'teddy':
+                        content.classList.add('background-teddy');
+                        content.innerHTML = `
+                            <div class="content-overlay">
+                                <h1>Happy Teddy Day, My Love!</h1>
+                                <button onclick="nextDay('promise', 'zoom')">Accept</button>
+                                <button onclick="endSad('teddy', 'rotate')">Decline</button>
+                            </div>
+                        `;
+                        break;
+                    case 'promise':
+                        content.classList.add('background-promise');
+                        content.innerHTML = `
+                            <div class="content-overlay">
+                                <h1>Happy Promise Day, My Love!</h1>
+                                <button onclick="nextDay('hug', 'slide-left')">Accept</button>
+                                <button onclick="endSad('promise', 'slide-right')">Decline</button>
+                            </div>
+                        `;
+                        break;
+                    case 'hug':
+                        content.classList.add('background-hug');
+                        content.innerHTML = `
+                            <div class="content-overlay">
+                                <h1>Happy Hug Day, My Love!</h1>
+                                <button onclick="nextDay('kiss', 'zoom')">Accept</button>
+                                <button onclick="endSad('hug', 'rotate')">Decline</button>
+                            </div>
+                        `;
+                        break;
+                    case 'kiss':
+                        content.classList.add('background-kiss');
+                        content.innerHTML = `
+                            <div class="content-overlay">
+                                <h1>Happy Kiss Day, My Love!</h1>
+                                <button onclick="nextDay('message', 'slide-left')">Accept</button>
+                                <button onclick="endSad('kiss', 'slide-right')">Decline</button>
+                            </div>
+                        `;
+                        break;
+                    case 'message':
+                        content.classList.add('background-valentine');
+                        content.innerHTML = `
+                            <div class="content-overlay">
+                                <h1>Every day with you feels brighter ☀️ and lighter. You make my heart feel safe, happy, and full 💓. I’m so grateful I get to love you and call you mine 🥰💖</h1>
+                                <button onclick="loadPage('valentine', 'zoom')">Continue</button>
+                            </div>
+                        `;
+                        break;
+                    case 'valentine':
+                        content.classList.add('background-valentine');
+                        content.innerHTML = `
+                            <div class="content-overlay">
+                                <h1>Happy Valentine's Day, My Love!</h1>
+                                <button onclick="fireworks()">Love</button>
+                            </div>
+                        `;
+                        break;
+                    case 'question':
+                        content.classList.add('background-question');
+                        content.innerHTML = `
+                            <div class="content-overlay">
+                                <h1>?</h1>
+                                <p>Try again!</p>
+                                <input type="text" id="retryInput" placeholder="Enter correct name/response">
+                                <button onclick="retry()">Try Again</button>
+                            </div>
+                        `;
+                        break;
+                    case 'sad':
+                        content.classList.add('background-sad');
+                        content.innerHTML = `
+                            <div class="content-overlay">
+                                <h1>GOODBYE</h1>
+                                <p>Refresh the page to start over.</p>
+                            </div>
+                        `;
+                        break;
+                }
+                // Apply transition in
+                setTimeout(() => {
+                    content.classList.add(transition + (transition === 'zoom' || transition === 'rotate' ? '.active' : ''));
+                }, 50);
+            }, 500); // Wait for fade out
         }
 
         function checkName() {
             const name = document.getElementById('nameInput').value.trim().toUpperCase();
             if (name === 'SHRISTY GT') {
-                loadPage('couple');
+                loadPage('couple', 'slide-left');
             } else {
-                loadPage('question');
+                loadPage('question', 'fade');
             }
         }
 
         function checkLove() {
             const love = document.getElementById('loveInput').value.trim().toUpperCase();
             if (love === 'KIRAN GT') {
-                loadPage('missing');
+                loadPage('missing', 'slide-right');
             } else {
-                loadPage('question');
+                loadPage('question', 'fade');
             }
         }
 
         function checkMiss() {
             const miss = document.getElementById('missInput').value.trim().toUpperCase();
             if (miss === 'I MISS YOU') {
-                loadPage('propose');
+                loadPage('propose', 'zoom');
             } else {
-                loadPage('question');
+                loadPage('question', 'fade');
             }
         }
 
-        function nextDay(next) {
-            loadPage(next);
+        function nextDay(next, transition) {
+            loadPage(next, transition);
         }
 
-        function endSad() {
-            loadPage('sad');
+        function endSad(day, transition) {
+            loadPage('sad', transition);
         }
 
         function retry() {
             const input = document.getElementById('retryInput').value.trim().toUpperCase();
             if (currentPage === 'question' && (input === 'SHRISTY GT' || input === 'KIRAN GT' || input === 'I MISS YOU')) {
-                if (input === 'SHRISTY GT') loadPage('couple');
-                else if (input === 'KIRAN GT') loadPage('missing');
-                else loadPage('propose');
+                if (input === 'SHRISTY GT') loadPage('couple', 'slide-left');
+                else if (input === 'KIRAN GT') loadPage('missing', 'slide-right');
+                else loadPage('propose', 'zoom');
             } else {
                 alert('Still wrong! Try again.');
             }
